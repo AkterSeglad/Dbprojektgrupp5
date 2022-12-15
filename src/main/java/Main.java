@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -15,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        testshow();
+
 
         while(true){
             printMenu();
@@ -23,7 +24,7 @@ public class Main {
 
             switch (userInput){
                 case "1":
-//                    javaQuiz();
+                    javaQuiz();
                     break;
             }
         }
@@ -32,13 +33,23 @@ public class Main {
 
     private static void javaQuiz() {
 
-        String sql = "SELECT Java FROM JavaQuestionsEntity Java";
-        Query q = entityManager.createQuery(sql);
+        Query q = entityManager.createQuery("SELECT Java FROM JavaQuestionsEntity Java");
 
-        var result = q.getResultList();
+        List<JavaQuestionsEntity> result = q.getResultList();
 
-        System.out.println();
+        int score = 0;
+        for(JavaQuestionsEntity Java:result) {
+            System.out.println(Java.getQuestion());
 
+            if (getUserInput().equals(Java.getCorrectAnswers()))
+                score++;
+        }
+        System.out.println("Score: " + score + " out of " + result.size());
+        System.out.println("------------");
+    }
+
+    private static String getUserInput(){
+        return scanner.nextLine().toUpperCase();
     }
 
     private static void testshow() {
