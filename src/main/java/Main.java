@@ -1,3 +1,4 @@
+import entity.JavaQuestionsEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,13 +15,15 @@ public class Main {
 
     public static void main(String[] args) {
 
+        testshow();
+
         while(true){
             printMenu();
             String userInput = scanner.nextLine();
 
             switch (userInput){
                 case "1":
-                    javaQuiz();
+//                    javaQuiz();
                     break;
             }
         }
@@ -28,9 +31,20 @@ public class Main {
     }
 
     private static void javaQuiz() {
-        String sql = ""
-        Query q = entityManager.createQuery()
 
+        String sql = "SELECT Java FROM JavaQuestionsEntity Java";
+        Query q = entityManager.createQuery(sql);
+
+        var result = q.getResultList();
+
+        System.out.println();
+
+    }
+
+    private static void testshow() {
+
+        JavaQuestionsEntity questions = entityManager.find(JavaQuestionsEntity.class, 1);
+        System.out.println("Fråga 1: " + questions.getQuestion());
     }
 
 

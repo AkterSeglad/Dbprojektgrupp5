@@ -3,7 +3,7 @@ package entity;
 import jakarta.persistence.*;
 
 @Entity
-@NamedQuery(query = "SELECT javaQuestions from JavaQuestionsEntity javaQuestions WHERE javaQuestion.question = :javaQ", name = "javaQuestionQuery")
+@NamedQuery(query = "SELECT javaQuestions from JavaQuestionsEntity javaQuestions WHERE javaQuestions.question = :javaQ", name = "javaQuestionQuery")
 @NamedQuery(query = "SELECT javaQuestions from JavaQuestionsEntity javaQuestions", name = "bokQuery")
 @Table(name = "java_questions", schema = "dbprojektgrupp5", catalog = "")
 public class JavaQuestionsEntity {
