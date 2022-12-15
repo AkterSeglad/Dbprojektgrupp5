@@ -1,3 +1,7 @@
+import Languages.Csharp;
+import Languages.Java;
+import Languages.Javascript;
+import Languages.Python;
 import entity.CsharpQuestionsEntity;
 import entity.JavaQuestionsEntity;
 import entity.JavascriptQuestionsEntity;
@@ -22,26 +26,25 @@ public class Main {
 
         boolean quit = false;
 
-        while(!quit){
+        while (!quit) {
             printMenu();
             String userInput = scanner.nextLine();
 
-            switch (userInput){
+            switch (userInput) {
                 case "1":
-                    javaQuiz();
+                    Java.javaQuiz();
                     break;
                 case "2":
-                    javaScriptQuiz();
+                    Javascript.javaScriptQuiz();
                     break;
                 case "3":
-                    CSharpQuiz();
+                    Csharp.CSharpQuiz();
                     break;
                 case "4":
-                    pythonQuiz();
+                    Python.pythonQuiz();
                     break;
                 case "ADMIN":
-                    addQuestion();
-                   // adminMenu();
+                    adminMenu();
                     break;
                 case "0":
                     System.exit(0);
@@ -51,116 +54,72 @@ public class Main {
     }
 
     private static void adminMenu() {
-        System.out.println(
-                "1  - Add question" +
-                "2  - Update question" +
-                "3  - Delete question"
-        );
+        boolean flag = true;
+        while(flag) {
+            System.out.println(
+                    "1  - Add question\n" +
+                            "2  - Update question\n" +
+                            "3  - Delete question\n" +
+                            "0  - Back to Main Menu"
+            );
+            switch (getUserInput()) {
+                case "1":
+                    addQuestion();
+                    break;
+                case "2":
+                    updateQuestion();
+                    break;
+                case "3":
+                    // deleteQuestion();
+                    break;
+                case "0":
+                    System.out.println("Redirecting back to menu..");
+                    flag = false;
+                    break;
+            }
+        }
     }
 
-    private static void addQuestion(){
-        System.out.println("You can add a question and answer");
+    private static void addQuestion() {
 
+        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python");
+        switch (getUserInput()){
+            case "1":
+                Java.addNewJavaQuestion();
+                break;
+            case "2":
+                Csharp.addNewCSharpQuestion();
+                break;
+            case "3":
+                Javascript.addNewJavaScriptQuestion();
+                break;
+            case "4":
+                Python.addNewPythonQuestion();
 
-
-        entityManager.getTransaction().begin();
-        JavaQuestionsEntity jqe = new JavaQuestionsEntity();
-        jqe.setQuestion("Fråga: ");
-        jqe.setCorrectAnswers("Q");
-        entityManager.persist(jqe);
-        entityManager.getTransaction().commit();
-       // entityManager.close();
-
+                break;
+        }
     }
 
-    private static void update(String question, String correct_answers){
+    private static void updateQuestion() {
         //Hur gör vi änna?
         System.out.println("What do you want to update?");
         entityManager.getTransaction().begin();
-      //  var bok = entityManager.find( BokEntity.class, getUserInput() );
+        //  var bok = entityManager.find( BokEntity.class, getUserInput() );
 
     }
 
-    private static void javaQuiz() {
 
-        Query query = entityManager.createQuery("SELECT Java FROM JavaQuestionsEntity Java");
-
-        List<JavaQuestionsEntity> result = query.getResultList();
-
-        int score = 0;
-        for(JavaQuestionsEntity Java:result) {
-            System.out.println(Java.getQuestion());
-
-            if (getUserInput().equals(Java.getCorrectAnswers()))
-                score++;
-        }
-        System.out.println("Score: " + score + " out of " + result.size());
-        System.out.println("------------");
-    }
-
-    private static void javaScriptQuiz(){
-
-        Query query = entityManager.createQuery("SELECT javaScript FROM JavascriptQuestionsEntity javaScript");
-
-        List<JavascriptQuestionsEntity> result = query.getResultList();
-
-        int score = 0;
-        for(JavascriptQuestionsEntity javaScript:result) {
-            System.out.println(javaScript.getQuestion());
-
-            if (getUserInput().equals(javaScript.getCorrectAnswers()))
-                score++;
-        }
-        System.out.println("Score: " + score + " out of " + result.size());
-        System.out.println("------------");
-
-    }
-
-    private static void CSharpQuiz(){
-
-        Query query = entityManager.createQuery("SELECT cSharp FROM CsharpQuestionsEntity cSharp");
-
-        List<CsharpQuestionsEntity> result = query.getResultList();
-
-        int score = 0;
-        for(CsharpQuestionsEntity cSharp:result) {
-            System.out.println(cSharp.getQuestion());
-
-            if (getUserInput().equals(cSharp.getCorrectAnswers()))
-                score++;
-        }
-        System.out.println("Score: " + score + " out of " + result.size());
-        System.out.println("------------");
-    }
-
-    private static void pythonQuiz() {
-
-        Query query = entityManager.createQuery("SELECT python FROM PythonQuestionsEntity python");
-
-        List<PythonQuestionsEntity> result = query.getResultList();
-
-        int score = 0;
-        for(PythonQuestionsEntity python:result) {
-            System.out.println(python.getQuestion());
-
-            if (getUserInput().equals(python.getCorrectAnswers()))
-                score++;
-        }
-        System.out.println("Score: " + score + " out of " + result.size());
-        System.out.println("------------");
-    }
-
-    private static String getUserInput(){
+    private static String getUserInput() {
         return scanner.nextLine().toUpperCase();
     }
 
     public static void printMenu() {
         System.out.println(
-               "1  - Java Quiz\n" +
-               "2  - JavaScript Quiz\n" +
-               "3  - C# Quiz\n" +
-               "4  - Python Quiz\n" +
-               "0  - EXIT");
+                "1  - Java Quiz\n" +
+                        "2  - C# Quiz\n" +
+                        "3  - JavaScript Quiz\n" +
+                        "4  - Python Quiz\n" +
+                        "0  - EXIT");
     }
 
 }
