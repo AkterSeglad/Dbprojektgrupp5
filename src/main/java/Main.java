@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,10 +39,45 @@ public class Main {
                 case "4":
                     pythonQuiz();
                     break;
+                case "ADMIN":
+                    addQuestion();
+                   // adminMenu();
+                    break;
                 case "0":
                     System.exit(0);
             }
         }
+
+    }
+
+    private static void adminMenu() {
+        System.out.println(
+                "1  - Add question" +
+                "2  - Update question" +
+                "3  - Delete question"
+        );
+    }
+
+    private static void addQuestion(){
+        System.out.println("You can add a question and answer");
+
+
+
+        entityManager.getTransaction().begin();
+        JavaQuestionsEntity jqe = new JavaQuestionsEntity();
+        jqe.setQuestion("Fråga: ");
+        jqe.setCorrectAnswers("Q");
+        entityManager.persist(jqe);
+        entityManager.getTransaction().commit();
+       // entityManager.close();
+
+    }
+
+    private static void update(String question, String correct_answers){
+        //Hur gör vi änna?
+        System.out.println("What do you want to update?");
+        entityManager.getTransaction().begin();
+      //  var bok = entityManager.find( BokEntity.class, getUserInput() );
 
     }
 
