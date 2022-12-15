@@ -55,4 +55,35 @@ public class Python {
     private static String getUserInput() {
         return scanner.nextLine();
     }
+
+    public static void deleteQuestion(){
+        System.out.println("");
+
+        listAllQuestions();
+
+        System.out.println("Enter the ID of the question you want to delete: ");
+        int userInput = Integer.parseInt(getUserInput());
+
+        entityManager.getTransaction().begin();
+        PythonQuestionsEntity question = entityManager.find( PythonQuestionsEntity.class, userInput);
+
+        entityManager.remove(question);
+        entityManager.getTransaction().commit();
+
+        System.out.println("Question was deleted successfully.");
+    }
+
+    private static void listAllQuestions() {
+
+        Query query = entityManager.createQuery("SELECT pq FROM PythonQuestionsEntity pq");
+        List<PythonQuestionsEntity> list = query.getResultList();
+
+        for (PythonQuestionsEntity pythonQuestions : list) {
+            System.out.println("ID: " + pythonQuestions.getId() + " | " + "Question: " + pythonQuestions.getQuestion()
+                    + " | " + "Answer: " + pythonQuestions.getCorrectAnswers());
+            System.out.println("----------------------------------------------------------------------");
+        }
+
+    }
+
 }

@@ -1,5 +1,6 @@
 package Languages;
 
+import entity.JavaQuestionsEntity;
 import entity.JavascriptQuestionsEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -55,5 +56,35 @@ public class Javascript {
         System.out.println("------------");
 
     }
+    public static void deleteQuestion(){
+        System.out.println("");
+
+        listAllQuestions();
+
+        System.out.println("Enter the ID of the question you want to delete: ");
+        int userInput = Integer.parseInt(getUserInput());
+
+        entityManager.getTransaction().begin();
+        JavascriptQuestionsEntity question = entityManager.find( JavascriptQuestionsEntity.class, userInput);
+
+        entityManager.remove(question);
+        entityManager.getTransaction().commit();
+
+        System.out.println("Question was deleted successfully.");
+    }
+
+    private static void listAllQuestions() {
+
+        Query query = entityManager.createQuery("SELECT jsq FROM JavascriptQuestionsEntity jsq");
+        List<JavascriptQuestionsEntity> list = query.getResultList();
+
+        for (JavascriptQuestionsEntity javascriptQuestions : list) {
+            System.out.println("ID: " + javascriptQuestions.getId() + " | " + "Question: " + javascriptQuestions.getQuestion()
+                    + " | " + "Answer: " + javascriptQuestions.getCorrectAnswers());
+            System.out.println("----------------------------------------------------------------------");
+        }
+
+    }
+
 }
 

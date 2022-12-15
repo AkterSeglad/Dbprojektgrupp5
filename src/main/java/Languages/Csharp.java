@@ -1,6 +1,8 @@
 package Languages;
 
 import entity.CsharpQuestionsEntity;
+import entity.JavaQuestionsEntity;
+import entity.PythonQuestionsEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -29,6 +31,35 @@ public class Csharp {
         entityManager.getTransaction().commit();
 
         System.out.println("Question successfully added.");
+    }
+    public static void deleteQuestion(){
+
+
+        listAllQuestions();
+
+        System.out.println("Enter the ID of the question you want to delete: ");
+        int userInput = Integer.parseInt(getUserInput());
+
+        entityManager.getTransaction().begin();
+        CsharpQuestionsEntity question = entityManager.find( CsharpQuestionsEntity.class, userInput);
+
+        entityManager.remove(question);
+        entityManager.getTransaction().commit();
+
+        System.out.println("Question was deleted successfully.");
+    }
+
+    private static void listAllQuestions() {
+
+        Query query = entityManager.createQuery("SELECT cq FROM CsharpQuestionsEntity cq");
+        List<CsharpQuestionsEntity> list = query.getResultList();
+
+        for (CsharpQuestionsEntity csharpQuestions : list) {
+            System.out.println("ID: " + csharpQuestions.getId() + " | " + "Question: " + csharpQuestions.getQuestion()
+                    + " | " + "Answer: " + csharpQuestions.getCorrectAnswers());
+            System.out.println("----------------------------------------------------------------------");
+        }
+
     }
 
     private static String getTrueOrFalse() {

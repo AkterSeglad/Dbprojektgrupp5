@@ -3,6 +3,8 @@ package entity;
 import jakarta.persistence.*;
 
 @Entity
+//@NamedQuery(query = "SELECT csharpQuestions from CsharpQuestionsEntity javaQuestions WHERE javaQuestions.question = :javaQ", name = "javaQuestionQuery")
+//@NamedQuery(query = "SELECT javaQuestions from JavaQuestionsEntity javaQuestions", name = "javaQuery")
 @Table(name = "csharp_questions", schema = "dbprojektgrupp5", catalog = "")
 
 public class CsharpQuestionsEntity {

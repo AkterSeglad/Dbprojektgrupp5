@@ -70,7 +70,7 @@ public class Main {
                     updateQuestion();
                     break;
                 case "3":
-                    // deleteQuestion();
+                    deleteQuestion();
                     break;
                 case "0":
                     System.out.println("Redirecting back to menu..");
@@ -95,8 +95,28 @@ public class Main {
                 break;
             case "4":
                 Python.addNewPythonQuestion();
-
                 break;
+
+        }
+    }
+
+    private static void deleteQuestion() {
+
+        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python");
+        switch (getUserInput()){
+            case "1":
+                Java.deleteQuestion();
+                break;
+            case "2":
+                Csharp.deleteQuestion();
+                break;
+            case "3":
+                Javascript.deleteQuestion();
+                break;
+            case "4":
+                Python.deleteQuestion();
+                break;
+
         }
     }
 
