@@ -1,6 +1,6 @@
 package Languages;
 
-import entity.JavaQuestionsEntity;
+
 import entity.PythonQuestionsEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -39,7 +39,7 @@ public class Python {
         for (PythonQuestionsEntity python : result) {
             System.out.println(python.getQuestion());
 
-            if (getUserInput().equals(python.getCorrectAnswers()))
+            if (getUserInput().equalsIgnoreCase(python.getCorrectAnswers()))
                 score++;
         }
         System.out.println("Score: " + score + " out of " + result.size());

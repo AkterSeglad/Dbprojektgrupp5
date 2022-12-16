@@ -2,25 +2,19 @@ import Languages.Csharp;
 import Languages.Java;
 import Languages.Javascript;
 import Languages.Python;
-import entity.CsharpQuestionsEntity;
-import entity.JavaQuestionsEntity;
-import entity.JavascriptQuestionsEntity;
-import entity.PythonQuestionsEntity;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.Query;
 
-import java.sql.SQLException;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     static final Scanner scanner = new Scanner(System.in);
 
-    static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-    static EntityManager entityManager = entityManagerFactory.createEntityManager();
+//    static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+//    static EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     public static void main(String[] args) {
 
@@ -56,7 +50,7 @@ public class Main {
     private static void adminMenu() {
         boolean flag = true;
         while(flag) {
-            System.out.println("------ MENU ------\n" +
+            System.out.println("------ ADMIN MENU ------\n" +
                     "1  - Add question\n" +
                             "2  - Update question\n" +
                             "3  - Delete question\n" +
@@ -154,7 +148,7 @@ public class Main {
     }
 
     public static void printMenu() {
-        System.out.println(
+        System.out.println("------ MENU ------\n" +
                 "1  - Java Quiz\n" +
                         "2  - C# Quiz\n" +
                         "3  - JavaScript Quiz\n" +

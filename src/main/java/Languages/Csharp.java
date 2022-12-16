@@ -1,8 +1,6 @@
 package Languages;
 
 import entity.CsharpQuestionsEntity;
-import entity.JavaQuestionsEntity;
-import entity.PythonQuestionsEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -82,7 +80,7 @@ public class Csharp {
         for (CsharpQuestionsEntity cSharp : result) {
             System.out.println(cSharp.getQuestion());
 
-            if (getUserInput().equals(cSharp.getCorrectAnswers()))
+            if (getUserInput().equalsIgnoreCase(cSharp.getCorrectAnswers()))
                 score++;
         }
         System.out.println("Score: " + score + " out of " + result.size());

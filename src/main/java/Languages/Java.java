@@ -6,7 +6,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +15,7 @@ public class Java {
     static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
     static EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-    public static void addNewJavaQuestion(){
+    public static void addNewJavaQuestion() {
 
         System.out.println("Enter a Java question");
         entityManager.getTransaction().begin();
@@ -30,7 +29,7 @@ public class Java {
         System.out.println("Question successfully added.");
     }
 
-    public static void deleteQuestion(){
+    public static void deleteQuestion() {
         System.out.println("");
 
         listAllQuestions();
@@ -39,7 +38,7 @@ public class Java {
         int userInput = Integer.parseInt(getUserInput());
 
         entityManager.getTransaction().begin();
-        JavaQuestionsEntity question = entityManager.find( JavaQuestionsEntity.class, userInput);
+        JavaQuestionsEntity question = entityManager.find(JavaQuestionsEntity.class, userInput);
 
         entityManager.remove(question);
         entityManager.getTransaction().commit();
@@ -59,7 +58,7 @@ public class Java {
         }
 
     }
-    
+
     public static void updateQuestion() {
 
         listAllQuestions();
@@ -82,7 +81,7 @@ public class Java {
             System.out.println("Question successfully updated.\n");
 
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Human error. Make sure to edit an existing question.");
         }
@@ -106,14 +105,22 @@ public class Java {
         List<JavaQuestionsEntity> result = query.getResultList();
 
         int score = 0;
+        int qCounter = 0;
         for (JavaQuestionsEntity Java : result) {
             System.out.println(Java.getQuestion());
-
-            if (getUserInput().equals(Java.getCorrectAnswers()))
+            qCounter++;
+            if (getUserInput().equalsIgnoreCase(Java.getCorrectAnswers()))
                 score++;
         }
+
+        double percent = 100 * (score / (double) qCounter);
+        if (percent == 100)
+            System.out.println("You had " + String.format("%.0f", percent) + "% correct answers.");
+        else
+            System.out.println("You had " + String.format("%.2f", percent) + "% correct answers.");
+
         System.out.println("Score: " + score + " out of " + result.size());
         System.out.println("------------");
-    }
 
+    }
 }

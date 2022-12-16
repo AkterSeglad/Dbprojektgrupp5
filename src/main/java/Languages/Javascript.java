@@ -1,6 +1,6 @@
 package Languages;
 
-import entity.JavaQuestionsEntity;
+
 import entity.JavascriptQuestionsEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -49,7 +49,7 @@ public class Javascript {
         for (JavascriptQuestionsEntity javaScript : result) {
             System.out.println(javaScript.getQuestion());
 
-            if (getUserInput().equals(javaScript.getCorrectAnswers()))
+            if (getUserInput().equalsIgnoreCase(javaScript.getCorrectAnswers()))
                 score++;
         }
         System.out.println("Score: " + score + " out of " + result.size());
