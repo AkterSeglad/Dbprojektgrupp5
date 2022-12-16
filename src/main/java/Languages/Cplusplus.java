@@ -1,15 +1,17 @@
 package Languages;
 
-import entity.CsharpQuestionsEntity;
+import entity.CplusplusQuestionsEntity;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
+
 import java.util.List;
 import java.util.Scanner;
 
-public class Csharp {
+public class Cplusplus {
 
     static final Scanner scanner = new Scanner(System.in);
 
@@ -17,17 +19,17 @@ public class Csharp {
     static EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-    public static void addNewCSharpQuestion() {
+    public static void addNewCPlusPlusQuestion() {
 
-        System.out.println("Enter new C# question: ");
+        System.out.println("Enter a C++ question: ");
 
         try {
         entityManager.getTransaction().begin();
-        CsharpQuestionsEntity cSharpEntity = new CsharpQuestionsEntity();
-        cSharpEntity.setQuestion(getUserInput());
+        CplusplusQuestionsEntity cPlusEntity = new CplusplusQuestionsEntity();
+        cPlusEntity.setQuestion(getUserInput());
 
-        cSharpEntity.setCorrectAnswers(getTrueOrFalse());
-        entityManager.persist(cSharpEntity);
+        cPlusEntity.setCorrectAnswers(getTrueOrFalse());
+        entityManager.persist(cPlusEntity);
         entityManager.getTransaction().commit();
 
         System.out.println("Question successfully added.");
@@ -36,6 +38,8 @@ public class Csharp {
             System.out.println("That question already exists.");
         }
     }
+
+
 
     public static void deleteQuestion() {
 
@@ -46,7 +50,7 @@ public class Csharp {
         int userInput = Integer.parseInt(getUserInput());
 
         entityManager.getTransaction().begin();
-        CsharpQuestionsEntity question = entityManager.find(CsharpQuestionsEntity.class, userInput);
+        CplusplusQuestionsEntity question = entityManager.find(CplusplusQuestionsEntity.class, userInput);
 
         entityManager.remove(question);
         entityManager.getTransaction().commit();
@@ -56,12 +60,12 @@ public class Csharp {
 
     private static void listAllQuestions() {
 
-        Query query = entityManager.createQuery("SELECT cq FROM CsharpQuestionsEntity cq");
-        List<CsharpQuestionsEntity> list = query.getResultList();
+        Query query = entityManager.createQuery("SELECT cq FROM CplusplusQuestionsEntity cq");
+        List<CplusplusQuestionsEntity> list = query.getResultList();
 
-        for (CsharpQuestionsEntity csharpQuestions : list) {
-            System.out.println("ID: " + csharpQuestions.getId() + " | " + "Question: " + csharpQuestions.getQuestion()
-                    + " | " + "Answer: " + csharpQuestions.getCorrectAnswers());
+        for (CplusplusQuestionsEntity cPlusPlusQuestions : list) {
+            System.out.println("ID: " + cPlusPlusQuestions.getId() + " | " + "Question: " + cPlusPlusQuestions.getQuestion()
+                    + " | " + "Answer: " + cPlusPlusQuestions.getCorrectAnswers());
             System.out.println("----------------------------------------------------------------------");
         }
 
@@ -76,21 +80,22 @@ public class Csharp {
         return scanner.nextLine();
     }
 
-    public static void CSharpQuiz() {
+    public static void cPlusPlusQuiz() {
 
-        Query query = entityManager.createQuery("SELECT cSharp FROM CsharpQuestionsEntity cSharp");
+        Query query = entityManager.createQuery("SELECT cPlusPlus FROM CplusplusQuestionsEntity cPlusPlus");
 
-        List<CsharpQuestionsEntity> result = query.getResultList();
+        List<CplusplusQuestionsEntity> result = query.getResultList();
 
         int score = 0;
         int qCounter = 0;
-        for (CsharpQuestionsEntity cSharp : result) {
-            System.out.println(cSharp.getQuestion());
+        for (CplusplusQuestionsEntity cPlusPlus : result) {
+            System.out.println(cPlusPlus.getQuestion());
             qCounter++;
-            if (getUserInput().equalsIgnoreCase(cSharp.getCorrectAnswers()))
+            if (getUserInput().equalsIgnoreCase(cPlusPlus.getCorrectAnswers()))
                 score++;
         }
-        double percent = 100 * (score / (double) qCounter);
+        double percent = (100 * (score / (double) qCounter));
+
         if (percent == 100)
             System.out.println("You had " + String.format("%.0f", percent) + "% correct answers.");
         else
@@ -109,7 +114,7 @@ public class Csharp {
         try {
 
             entityManager.getTransaction().begin();
-            CsharpQuestionsEntity question = entityManager.find(CsharpQuestionsEntity.class, userInput);
+            CplusplusQuestionsEntity question = entityManager.find(CplusplusQuestionsEntity.class, userInput);
 
             System.out.println("Enter new question: ");
             question.setQuestion(getUserInput());
@@ -121,11 +126,9 @@ public class Csharp {
 
             System.out.println("Question successfully updated.\n");
 
-
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ID error. Make sure to edit an existing question.");
         }
     }
-
 }

@@ -18,16 +18,22 @@ public class Python {
 
     public static void addNewPythonQuestion(){
 
-        System.out.println("Enter a Python question");
-        entityManager.getTransaction().begin();
-        PythonQuestionsEntity pqe = new PythonQuestionsEntity();
-        pqe.setQuestion(getUserInput());
+        try {
 
-        pqe.setCorrectAnswers(getTrueOrFalse());
-        entityManager.persist(pqe);
-        entityManager.getTransaction().commit();
+            System.out.println("Enter new Python question: ");
+            entityManager.getTransaction().begin();
+            PythonQuestionsEntity pqe = new PythonQuestionsEntity();
+            pqe.setQuestion(getUserInput());
 
-        System.out.println("Question successfully added.");
+            pqe.setCorrectAnswers(getTrueOrFalse());
+            entityManager.persist(pqe);
+            entityManager.getTransaction().commit();
+
+            System.out.println("Question successfully added.");
+        }
+        catch (Exception e){
+            System.out.println("That question already exists.");
+        }
     }
 
     public static void pythonQuiz(){
@@ -83,7 +89,7 @@ public class Python {
 
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("Human error. Make sure to edit an existing question.");
+            System.out.println("ID error. Make sure to edit an existing question.");
         }
 
     }

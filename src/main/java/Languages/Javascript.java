@@ -18,16 +18,22 @@ public class Javascript {
 
     public static void addNewJavaScriptQuestion() {
 
-        System.out.println("Enter a JavaScript question");
-        entityManager.getTransaction().begin();
-        JavascriptQuestionsEntity jsqe = new JavascriptQuestionsEntity();
-        jsqe.setQuestion(getUserInput());
+        System.out.println("Enter new JavaScript question: ");
 
-        jsqe.setCorrectAnswers(getTrueOrFalse());
-        entityManager.persist(jsqe);
-        entityManager.getTransaction().commit();
+        try {
+            entityManager.getTransaction().begin();
+            JavascriptQuestionsEntity jsqe = new JavascriptQuestionsEntity();
+            jsqe.setQuestion(getUserInput());
 
-        System.out.println("Question successfully added.");
+            jsqe.setCorrectAnswers(getTrueOrFalse());
+            entityManager.persist(jsqe);
+            entityManager.getTransaction().commit();
+
+            System.out.println("Question successfully added.");
+
+        } catch (Exception e){
+            System.out.println("That question already exists.");
+        }
     }
 
     private static String getTrueOrFalse() {
@@ -118,7 +124,7 @@ public class Javascript {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Human error. Make sure to edit an existing question.");
+            System.out.println("ID error. Make sure to edit an existing question.");
         }
 
     }

@@ -17,7 +17,9 @@ public class Java {
 
     public static void addNewJavaQuestion() {
 
-        System.out.println("Enter a Java question");
+        System.out.println("Enter new Java question: ");
+
+        try {
         entityManager.getTransaction().begin();
         JavaQuestionsEntity jqe = new JavaQuestionsEntity();
         jqe.setQuestion(getUserInput());
@@ -27,6 +29,11 @@ public class Java {
         entityManager.getTransaction().commit();
 
         System.out.println("Question successfully added.");
+
+        } catch (Exception e){
+            System.out.println("That question already exists.");
+        }
+
     }
 
     public static void deleteQuestion() {
@@ -83,7 +90,7 @@ public class Java {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Human error. Make sure to edit an existing question.");
+            System.out.println("ID error. Make sure to edit an existing question.");
         }
 
     }

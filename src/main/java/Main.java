@@ -1,20 +1,10 @@
-import Languages.Csharp;
-import Languages.Java;
-import Languages.Javascript;
-import Languages.Python;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import Languages.*;
 
 import java.util.Scanner;
 
 public class Main {
 
     static final Scanner scanner = new Scanner(System.in);
-
-//    static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-//    static EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     public static void main(String[] args) {
 
@@ -37,11 +27,14 @@ public class Main {
                 case "4":
                     Python.pythonQuiz();
                     break;
+                case "5":
+                    Cplusplus.cPlusPlusQuiz();
                 case "ADMIN":
                     adminMenu();
                     break;
                 case "0":
                     System.exit(0);
+                    break;
             }
         }
 
@@ -77,7 +70,7 @@ public class Main {
     private static void addQuestion() {
 
         System.out.println("---- Add a question ---- ");
-        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python");
+        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python\n5. C++");
         switch (getUserInput()){
             case "1":
                 Java.addNewJavaQuestion();
@@ -91,14 +84,16 @@ public class Main {
             case "4":
                 Python.addNewPythonQuestion();
                 break;
-
+            case "5":
+                Cplusplus.addNewCPlusPlusQuestion();
+                break;
         }
     }
 
     private static void deleteQuestion() {
 
         System.out.println("---- Delete a question ---- ");
-        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python");
+        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python\n 5. C++");
 
         switch (getUserInput()){
             case "1":
@@ -113,14 +108,16 @@ public class Main {
             case "4":
                 Python.deleteQuestion();
                 break;
-
+            case "5":
+                Cplusplus.deleteQuestion();
+                break;
         }
     }
 
     private static void updateQuestion() {
 
         System.out.println("---- Update a question ---- ");
-        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python\n0. Back");
+        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python\n5. C++\n0. Back");
 
         switch (getUserInput()) {
             case "1":
@@ -135,13 +132,14 @@ public class Main {
             case "4":
                 Python.updateQuestion();
                 break;
+            case "5":
+                Cplusplus.updateQuestion();
+                break;
             case "0":
                 adminMenu();
                 break;
-
         }
     }
-
 
     private static String getUserInput() {
         return scanner.nextLine().toUpperCase();
@@ -149,11 +147,11 @@ public class Main {
 
     public static void printMenu() {
         System.out.println("------ MENU ------\n" +
-                "1  - Java Quiz\n" +
+                        "1  - Java Quiz\n" +
                         "2  - C# Quiz\n" +
                         "3  - JavaScript Quiz\n" +
                         "4  - Python Quiz\n" +
+                        "5  - C++ Quiz\n" +
                         "0  - EXIT");
     }
-
 }
