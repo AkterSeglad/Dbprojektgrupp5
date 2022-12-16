@@ -19,7 +19,7 @@ public class Csharp {
     static EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 
-    public static void addNewCSharpQuestion(){
+    public static void addNewCSharpQuestion() {
 
         System.out.println("Enter a C# question: ");
         entityManager.getTransaction().begin();
@@ -32,7 +32,8 @@ public class Csharp {
 
         System.out.println("Question successfully added.");
     }
-    public static void deleteQuestion(){
+
+    public static void deleteQuestion() {
 
 
         listAllQuestions();
@@ -41,7 +42,7 @@ public class Csharp {
         int userInput = Integer.parseInt(getUserInput());
 
         entityManager.getTransaction().begin();
-        CsharpQuestionsEntity question = entityManager.find( CsharpQuestionsEntity.class, userInput);
+        CsharpQuestionsEntity question = entityManager.find(CsharpQuestionsEntity.class, userInput);
 
         entityManager.remove(question);
         entityManager.getTransaction().commit();
@@ -87,4 +88,33 @@ public class Csharp {
         System.out.println("Score: " + score + " out of " + result.size());
         System.out.println("------------");
     }
+
+    public static void updateQuestion() {
+
+        listAllQuestions();
+        System.out.println("Enter the ID of the question you want to update: ");
+        int userInput = Integer.parseInt(getUserInput());
+
+        try {
+
+            entityManager.getTransaction().begin();
+            CsharpQuestionsEntity question = entityManager.find(CsharpQuestionsEntity.class, userInput);
+
+            System.out.println("Enter new question: ");
+            question.setQuestion(getUserInput());
+
+            question.setCorrectAnswers(getTrueOrFalse());
+
+            entityManager.persist(question);
+            entityManager.getTransaction().commit();
+
+            System.out.println("Question successfully updated.\n");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Human error. Make sure to edit an existing question.");
+        }
+    }
+
 }

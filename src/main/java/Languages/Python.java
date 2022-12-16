@@ -52,6 +52,36 @@ public class Python {
         return String.valueOf(scanner.nextLine().toUpperCase().charAt(0));
     }
 
+    public static void updateQuestion() {
+
+        listAllQuestions();
+        System.out.println("Enter the ID of the question you want to update: ");
+        int userInput = Integer.parseInt(getUserInput());
+
+        try {
+
+            entityManager.getTransaction().begin();
+            PythonQuestionsEntity question = entityManager.find(PythonQuestionsEntity.class, userInput);
+
+            System.out.println("Enter new question: ");
+            question.setQuestion(getUserInput());
+
+            question.setCorrectAnswers(getTrueOrFalse());
+
+            entityManager.persist(question);
+            entityManager.getTransaction().commit();
+
+            System.out.println("Question successfully updated.\n");
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Human error. Make sure to edit an existing question.");
+        }
+
+    }
+
+
     private static String getUserInput() {
         return scanner.nextLine();
     }

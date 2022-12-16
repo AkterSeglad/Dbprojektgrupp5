@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -58,6 +59,36 @@ public class Java {
         }
 
     }
+    
+    public static void updateQuestion() {
+
+        listAllQuestions();
+        System.out.println("Enter the ID of the question you want to update: ");
+        int userInput = Integer.parseInt(getUserInput());
+
+        try {
+
+            entityManager.getTransaction().begin();
+            JavaQuestionsEntity question = entityManager.find(JavaQuestionsEntity.class, userInput);
+
+            System.out.println("Enter new question: ");
+            question.setQuestion(getUserInput());
+
+            question.setCorrectAnswers(getTrueOrFalse());
+
+            entityManager.persist(question);
+            entityManager.getTransaction().commit();
+
+            System.out.println("Question successfully updated.\n");
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("Human error. Make sure to edit an existing question.");
+        }
+
+    }
+
 
     private static String getTrueOrFalse() {
         System.out.println("True or false: ");

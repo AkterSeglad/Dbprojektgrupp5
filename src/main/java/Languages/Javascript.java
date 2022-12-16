@@ -16,7 +16,7 @@ public class Javascript {
     static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
     static EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-    public static void addNewJavaScriptQuestion(){
+    public static void addNewJavaScriptQuestion() {
 
         System.out.println("Enter a JavaScript question");
         entityManager.getTransaction().begin();
@@ -56,7 +56,8 @@ public class Javascript {
         System.out.println("------------");
 
     }
-    public static void deleteQuestion(){
+
+    public static void deleteQuestion() {
         System.out.println("");
 
         listAllQuestions();
@@ -65,7 +66,7 @@ public class Javascript {
         int userInput = Integer.parseInt(getUserInput());
 
         entityManager.getTransaction().begin();
-        JavascriptQuestionsEntity question = entityManager.find( JavascriptQuestionsEntity.class, userInput);
+        JavascriptQuestionsEntity question = entityManager.find(JavascriptQuestionsEntity.class, userInput);
 
         entityManager.remove(question);
         entityManager.getTransaction().commit();
@@ -86,5 +87,33 @@ public class Javascript {
 
     }
 
+    public static void updateQuestion() {
+
+        listAllQuestions();
+        System.out.println("Enter the ID of the question you want to update: ");
+        int userInput = Integer.parseInt(getUserInput());
+
+        try {
+
+            entityManager.getTransaction().begin();
+            JavascriptQuestionsEntity question = entityManager.find(JavascriptQuestionsEntity.class, userInput);
+
+            System.out.println("Enter new question: ");
+            question.setQuestion(getUserInput());
+
+            question.setCorrectAnswers(getTrueOrFalse());
+
+            entityManager.persist(question);
+            entityManager.getTransaction().commit();
+
+            System.out.println("Question successfully updated.\n");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Human error. Make sure to edit an existing question.");
+        }
+
+    }
 }
 

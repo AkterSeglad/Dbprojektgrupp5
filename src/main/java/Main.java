@@ -28,7 +28,7 @@ public class Main {
 
         while (!quit) {
             printMenu();
-            String userInput = scanner.nextLine();
+            String userInput = scanner.nextLine().toUpperCase();
 
             switch (userInput) {
                 case "1":
@@ -56,7 +56,7 @@ public class Main {
     private static void adminMenu() {
         boolean flag = true;
         while(flag) {
-            System.out.println(
+            System.out.println("------ MENU ------\n" +
                     "1  - Add question\n" +
                             "2  - Update question\n" +
                             "3  - Delete question\n" +
@@ -82,6 +82,7 @@ public class Main {
 
     private static void addQuestion() {
 
+        System.out.println("---- Add a question ---- ");
         System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python");
         switch (getUserInput()){
             case "1":
@@ -102,7 +103,9 @@ public class Main {
 
     private static void deleteQuestion() {
 
+        System.out.println("---- Delete a question ---- ");
         System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python");
+
         switch (getUserInput()){
             case "1":
                 Java.deleteQuestion();
@@ -121,11 +124,28 @@ public class Main {
     }
 
     private static void updateQuestion() {
-        //Hur gör vi änna?
-        System.out.println("What do you want to update?");
-        entityManager.getTransaction().begin();
-        //  var bok = entityManager.find( BokEntity.class, getUserInput() );
 
+        System.out.println("---- Update a question ---- ");
+        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python\n0. Back");
+
+        switch (getUserInput()) {
+            case "1":
+                Java.updateQuestion();
+                break;
+            case "2":
+               Csharp.updateQuestion();
+                break;
+            case "3":
+                Javascript.updateQuestion();
+                break;
+            case "4":
+                Python.updateQuestion();
+                break;
+            case "0":
+                adminMenu();
+                break;
+
+        }
     }
 
 
