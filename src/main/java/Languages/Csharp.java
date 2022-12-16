@@ -77,12 +77,19 @@ public class Csharp {
         List<CsharpQuestionsEntity> result = query.getResultList();
 
         int score = 0;
+        int qCounter = 0;
         for (CsharpQuestionsEntity cSharp : result) {
             System.out.println(cSharp.getQuestion());
-
+            qCounter++;
             if (getUserInput().equalsIgnoreCase(cSharp.getCorrectAnswers()))
                 score++;
         }
+        double percent = 100 * (score / (double) qCounter);
+        if (percent == 100)
+            System.out.println("You had " + String.format("%.0f", percent) + "% correct answers.");
+        else
+            System.out.println("You had " + String.format("%.2f", percent) + "% correct answers.");
+
         System.out.println("Score: " + score + " out of " + result.size());
         System.out.println("------------");
     }
