@@ -1,12 +1,11 @@
 package Languages;
 
 import entity.CplusplusQuestionsEntity;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
-
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.List;
 import java.util.Scanner;
@@ -49,6 +48,7 @@ public class Cplusplus {
         System.out.println("Enter the ID of the question you want to delete: ");
         int userInput = Integer.parseInt(getUserInput());
 
+        try {
         entityManager.getTransaction().begin();
         CplusplusQuestionsEntity question = entityManager.find(CplusplusQuestionsEntity.class, userInput);
 
@@ -56,6 +56,9 @@ public class Cplusplus {
         entityManager.getTransaction().commit();
 
         System.out.println("Question was deleted successfully.");
+        } catch (Exception e) {
+            System.out.println("Could not find question ID. Nothing was deleted.");
+        }
     }
 
     private static void listAllQuestions() {
@@ -94,7 +97,7 @@ public class Cplusplus {
             if (getUserInput().equalsIgnoreCase(cPlusPlus.getCorrectAnswers()))
                 score++;
         }
-        double percent = (100 * (score / (double) qCounter));
+        double percent = 100 * (score / (double) qCounter);
 
         if (percent == 100)
             System.out.println("You had " + String.format("%.0f", percent) + "% correct answers.");
@@ -114,7 +117,12 @@ public class Cplusplus {
         try {
 
             entityManager.getTransaction().begin();
+
             CplusplusQuestionsEntity question = entityManager.find(CplusplusQuestionsEntity.class, userInput);
+            if(question == null){
+                System.out.println("Question ID does not exist");
+                return;
+            }
 
             System.out.println("Enter new question: ");
             question.setQuestion(getUserInput());
@@ -128,7 +136,7 @@ public class Cplusplus {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("ID error. Make sure to edit an existing question.");
+
         }
     }
 }

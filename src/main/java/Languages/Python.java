@@ -1,12 +1,10 @@
 package Languages;
 
-
 import entity.PythonQuestionsEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,6 +48,7 @@ public class Python {
                 score++;
         }
         double percent = 100 * (score / (double) qCounter);
+
         if (percent == 100)
             System.out.println("You had " + String.format("%.0f", percent) + "% correct answers.");
         else
@@ -75,7 +74,10 @@ public class Python {
 
             entityManager.getTransaction().begin();
             PythonQuestionsEntity question = entityManager.find(PythonQuestionsEntity.class, userInput);
-
+            if(question == null) {
+                System.out.println("Question ID does not exist");
+                return;
+            }
             System.out.println("Enter new question: ");
             question.setQuestion(getUserInput());
 
@@ -89,7 +91,7 @@ public class Python {
 
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("ID error. Make sure to edit an existing question.");
+
         }
 
     }
@@ -100,20 +102,24 @@ public class Python {
     }
 
     public static void deleteQuestion(){
-        System.out.println("");
 
         listAllQuestions();
 
         System.out.println("Enter the ID of the question you want to delete: ");
         int userInput = Integer.parseInt(getUserInput());
 
-        entityManager.getTransaction().begin();
-        PythonQuestionsEntity question = entityManager.find( PythonQuestionsEntity.class, userInput);
+            try {
 
-        entityManager.remove(question);
-        entityManager.getTransaction().commit();
+                entityManager.getTransaction().begin();
+                PythonQuestionsEntity question = entityManager.find(PythonQuestionsEntity.class, userInput);
 
-        System.out.println("Question was deleted successfully.");
+                entityManager.remove(question);
+                entityManager.getTransaction().commit();
+
+                System.out.println("Question was deleted successfully.");
+            }catch (Exception e){
+                System.out.println("Could not find question ID. Nothing was deleted");
+            }
     }
 
     private static void listAllQuestions() {

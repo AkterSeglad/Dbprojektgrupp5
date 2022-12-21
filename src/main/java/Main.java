@@ -1,5 +1,4 @@
 import Languages.*;
-
 import java.util.Scanner;
 
 public class Main {
@@ -8,9 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        boolean quit = false;
-
-        while (!quit) {
+        while (true) {
             printMenu();
             String userInput = scanner.nextLine().toUpperCase();
 
@@ -19,10 +16,10 @@ public class Main {
                     Java.javaQuiz();
                     break;
                 case "2":
-                    Javascript.javaScriptQuiz();
+                    Csharp.CSharpQuiz();
                     break;
                 case "3":
-                    Csharp.CSharpQuiz();
+                    Javascript.javaScriptQuiz();
                     break;
                 case "4":
                     Python.pythonQuiz();
@@ -93,7 +90,7 @@ public class Main {
     private static void deleteQuestion() {
 
         System.out.println("---- Delete a question ---- ");
-        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python\n 5. C++");
+        System.out.println("What language? \n1. Java\n2. C#\n3. JavaScript\n4. Python\n5. C++");
 
         switch (getUserInput()){
             case "1":

@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,19 +44,25 @@ public class Csharp {
         System.out.println("Enter the ID of the question you want to delete: ");
         int userInput = Integer.parseInt(getUserInput());
 
+        try {
+
         entityManager.getTransaction().begin();
         CsharpQuestionsEntity question = entityManager.find(CsharpQuestionsEntity.class, userInput);
 
         entityManager.remove(question);
         entityManager.getTransaction().commit();
-
         System.out.println("Question was deleted successfully.");
+        } catch (Exception e) {
+            System.out.println("Could not find Question ID. Nothing was deleted.");
+        }
+
     }
 
     private static void listAllQuestions() {
 
         Query query = entityManager.createQuery("SELECT cq FROM CsharpQuestionsEntity cq");
         List<CsharpQuestionsEntity> list = query.getResultList();
+
 
         for (CsharpQuestionsEntity csharpQuestions : list) {
             System.out.println("ID: " + csharpQuestions.getId() + " | " + "Question: " + csharpQuestions.getQuestion()
@@ -110,6 +115,11 @@ public class Csharp {
 
             entityManager.getTransaction().begin();
             CsharpQuestionsEntity question = entityManager.find(CsharpQuestionsEntity.class, userInput);
+
+            if(question == null) {
+                System.out.println("Question ID does not exist");
+                return;
+            }
 
             System.out.println("Enter new question: ");
             question.setQuestion(getUserInput());

@@ -1,12 +1,10 @@
 package Languages;
 
-
 import entity.JavascriptQuestionsEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -71,13 +69,13 @@ public class Javascript {
     }
 
     public static void deleteQuestion() {
-        System.out.println("");
 
         listAllQuestions();
 
         System.out.println("Enter the ID of the question you want to delete: ");
         int userInput = Integer.parseInt(getUserInput());
 
+        try {
         entityManager.getTransaction().begin();
         JavascriptQuestionsEntity question = entityManager.find(JavascriptQuestionsEntity.class, userInput);
 
@@ -85,6 +83,9 @@ public class Javascript {
         entityManager.getTransaction().commit();
 
         System.out.println("Question was deleted successfully.");
+        } catch (Exception e) {
+            System.out.println("Could not find question ID. Nothing was deleted.");
+        }
     }
 
     private static void listAllQuestions() {
@@ -111,6 +112,11 @@ public class Javascript {
             entityManager.getTransaction().begin();
             JavascriptQuestionsEntity question = entityManager.find(JavascriptQuestionsEntity.class, userInput);
 
+            if(question == null) {
+                System.out.println("Question ID does not exist");
+                return;
+            }
+
             System.out.println("Enter new question: ");
             question.setQuestion(getUserInput());
 
@@ -124,7 +130,6 @@ public class Javascript {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("ID error. Make sure to edit an existing question.");
         }
 
     }
