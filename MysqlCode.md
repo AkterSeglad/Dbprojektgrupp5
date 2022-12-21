@@ -1,5 +1,3 @@
-# Dbprojektgrupp5
-
 show tables
 
 select * from java_questions
@@ -85,9 +83,11 @@ VALUES ('Java is an object-oriented programming language. True or false? (T/F)',
        ('In Java, "record" is a reserved keyword. True or false? (T/F)', 'F'),
        ('Array index starts with 1. True or false? (T/F)', 'F'),
        ('Interfaces can be instantiated. True or false? (T/F)', 'F'),
-       ('A .class file contains bytecodes? True or false? (T/F)', 'F');
+       ('A .class file contains bytecodes? True or false? (T/F)', 'T');
 
 select * from java_questions
+
+drop table java_questions
 
 -- Dummy data till javascript tabellen
 
@@ -102,7 +102,14 @@ select * from javascript_questions
 
 INSERT INTO Cplusplus_questions (question, correct_answers)
 VALUES ('C++ is a dynamically-typed language: (T/F)', 'F'),
-       ('C++ is platform-independent: (T/F)', 'T');
+       ('C++ is platform-independent: (T/F)', 'T'),
+       ('C++ is slower than interpreted languages','F'),
+       ('C++ does not support object-oriented programming:','F'),
+       ('C++ is an easy language to learn:', 'F'),
+       ('C++ is case-sensitive:','T'),
+       ('C++ does not support generic programming:','F'),
+       ('C++ has a garbage collector:','F'),
+       ('C++ has a rich standard library:','T');
 
 select * from cplusplus_questions
 
